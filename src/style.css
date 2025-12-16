@@ -25,6 +25,7 @@ body {
     padding: 20px;
     position: relative;
     overflow: hidden;
+    top: -10px;
 }
 
 header h1 {
@@ -534,7 +535,7 @@ path {
 .day.today::after {
     content: "";
     position: absolute;
-    inset: -3px;
+    inset: -2.5px;
     border-radius: 50%;
     border: 1.5px solid #ff6363;
     pointer-events: none;
