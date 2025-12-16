@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="./src/style.css">
+    <title>Title</title>
+</head>
+
+<body>
+
+    <div class="phone">
+
+        <header>
+            <button id="menu-btn" class="menu-btn" aria-label="menu">
+                <span></span><span></span><span></span>
+            </button>
+
+
+            <h1 id="title"></h1>
+            <p>날짜를 하나 선택해 목적지를 정하세요</p>
+        </header>
+        <!-- 상단 목표 표시 -->
+        <div id="goal-display" class="goal-display hidden">
+            <span id="goal-dday"></span>
+
+            <span id="goal-date"></span>
+            <span id="goal-text"></span>
+            <button id="goal-edit" aria-label="목표 수정">✎</button>
+        </div>
+        <div class="journey-bar">
+            <div id="arrived-message" class="hidden">🎉 도착했어요</div>
+            <div class="journey-track">
+                <div class="journey-fill"></div>
+                <div class="journey-marker">
+                    <span id="journey-emoji">🐢</span>
+                </div>
+            </div>
+
+            <div class="journey-labels">
+                <span id="journey-start">Start</span>
+                <span id="journey-goal">Goal</span>
+            </div>
+        </div>
+
+
+        <!-- 목표 입력 팝업 -->
+        <div id="goal-popup" class="goal-popup hidden">
+            <div class="goal-popup-inner">
+                <p>목표를 입력하세요</p>
+                <input id="goal-input" type="text" placeholder="예: 미디어 과제 제출" />
+                <button id="goal-save">저장</button>
+            </div>
+        </div>
+
+
+        <!-- 선을 그릴 SVG -->
+        <svg id="line-layer"></svg>
+        <div id="weekdays">
+            <span>Sun</span>
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+        </div>
+        <!-- 날짜들 -->
+        <div id="dates"></div>
+        <div id="menu-overlay" class="menu-overlay hidden"></div>
+
+        <!-- 오른쪽 슬라이드 메뉴 -->
+        <div id="menu-panel" class="menu-panel hidden">
+            <h3>설정</h3>
+            <p class="menu-desc">현재 목표</p>
+            <div id="menu-current-goal"></div>
+
+            <button id="add-schedule">새로운 목표로 변경하기</button>
+        </div>
+
+    </div>
+
+    <div id="stage-popup" class="stage-popup hidden">
+        <div class="stage-popup-inner">
+            <h3 id="stage-title"></h3>
+
+            <div class="stage-progress-wrap">
+                <div class="stage-progress-bar">
+                    <div class="stage-progress-fill"></div>
+                    <div class="stage-progress-knob"></div>
+                </div>
+
+                <span id="stage-percent">0%</span>
+            </div>
+
+            <div class="stage-dots">
+                <span></span><span></span><span></span>
+            </div>
+
+            <button id="stage-save">save</button>
+        </div>
+    </div>
+
+    <script src="./src/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,572 @@
+* {
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: #eee;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phone {
+    width: 360px;
+    height: 640px;
+    background: #fff;
+    border-radius: 28px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+header p {
+    font-size: 12px;
+    color: #666;
+}
+
+/* 날짜 컨테이너 */
+#dates {
+    position: absolute;
+    top: 20px;
+    /* header 아래 */
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    overflow-y: auto;
+    /* ⭐ 여기 */
+    overflow-x: hidden;
+}
+
+/* 날짜 점 */
+.day {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.day.dim {
+    opacity: 0.25;
+}
+
+.day.active {
+    background: #222;
+    color: #fff;
+}
+
+.day.target {
+    width: 60px;
+    height: 60px;
+    font-size: 16px;
+    background: #000;
+    color: #fff;
+}
+
+#line-layer path {
+    fill: none;
+    stroke: #9a9a9a;
+    /* ⭐ 눈에 띄는 색으로 테스트 */
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.9;
+
+}
+
+path {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+
+}
+
+.day.today {
+    background: #555;
+    color: #fff;
+}
+
+.goal-box {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.goal-box.hidden {
+    display: none;
+}
+
+.day {
+    z-index: 1;
+}
+
+.day.active,
+.day.target {
+    z-index: 5;
+}
+
+
+#line-layer {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    pointer-events: none;
+}
+
+#line-layer {
+    display: none;
+}
+
+.goal-display {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f2f2f2;
+    border-radius: 12px;
+    font-size: 13px;
+    display: flex;
+    gap: 8px;
+
+}
+
+.goal-display span:first-child {
+    font-weight: 600;
+}
+
+.goal-popup {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+.goal-popup-inner {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.goal-popup input {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.goal-popup button {
+    padding: 8px;
+    background: #222;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.hidden {
+    display: none;
+}
+
+#goal-edit {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+#goal-edit:hover {
+    opacity: 1;
+}
+
+#dates {
+    z-index: 1;
+}
+
+.goal-display {
+    position: relative;
+    z-index: 10;
+}
+
+/* =========================
+   성취도 팝업 (추가)
+========================= */
+.stage-popup {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+}
+
+.stage-popup-inner {
+    background: #fff;
+    width: 80%;
+    padding: 20px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stage-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stage-progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stage-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #222;
+
+}
+
+.stage-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.stage-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+}
+
+.stage-dots span.filled {
+    background: #000;
+}
+
+/* 날짜 아래 dots (추가) */
+.day-dots {
+    position: absolute;
+    bottom: -10px;
+    display: flex;
+    gap: 4px;
+}
+
+.day-dots {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.day-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #dddddd;
+}
+
+.day-dots span.filled {
+    background: #00ff11;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 성취도 바 위 원 (추가) */
+.stage-progress-wrap {
+    position: relative;
+    /* ✅ 기준 컨테이너 */
+}
+
+.stage-progress-knob {
+    position: absolute;
+    /* bar 세로 가운데에 오게 */
+    top: 50%;
+    left: 0px;
+    width: 14px;
+    height: 14px;
+    background: #000000;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+@keyframes dayPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.18);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.day.pulse {
+    animation: dayPulse 0.7s ease-out;
+}
+
+/* =========================
+   햄버거 버튼
+========================= */
+.menu-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.menu-btn span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #111;
+    margin: 4px 0;
+    border-radius: 2px;
+}
+
+/* =========================
+   메뉴 오버레이
+========================= */
+.menu-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 900;
+}
+
+/* =========================
+   오른쪽 슬라이드 메뉴
+========================= */
+.menu-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    background: #fff;
+    z-index: 1000;
+    padding: 20px;
+    transform: translateX(100%);
+    transition: transform .3s ease;
+}
+
+.menu-panel.open {
+    transform: translateX(0);
+}
+
+.menu-desc {
+    font-size: 12px;
+    color: #666;
+    margin: 12px 0 6px;
+}
+
+#menu-current-goal {
+    padding: 10px;
+    border-radius: 12px;
+    background: #f2f2f2;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+#add-schedule {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+}
+
+.stage-progress-bar {
+    touch-action: none;
+}
+
+.journey-bar {
+    margin: 16px 0 8px;
+
+}
+
+.journey-track {
+    position: relative;
+    height: 10px;
+    border-radius: 999px;
+    background: #e5e5e5;
+    z-index: 10;
+}
+
+.journey-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,
+            #cfd9ff,
+            #b5f3c7);
+    transition: width .6s ease;
+}
+
+.journey-marker {
+    position: absolute;
+    top: -14px;
+    /* ← 바 위로 올리는 핵심 */
+    transform: translateX(-50%);
+    pointer-events: none;
+    font-size: 22px;
+}
+
+@keyframes floatEmoji {
+    0% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-3px);
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.journey-marker {
+    animation: floatEmoji 2s ease-in-out infinite;
+}
+
+.journey-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #777;
+    margin-top: 6px;
+}
+
+.journey-bar {
+    display: none;
+}
+
+#weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+
+    position: absolute;
+    top: 110px;
+    /* 날짜 시작보다 위 */
+    left: 20px;
+    right: 20px;
+
+    font-size: 11px;
+    color: #888;
+    text-align: center;
+}
+
+#weekdays span {
+    font-weight: 500;
+}
+
+#weekdays span:first-child {
+    color: #e57373;
+    /* Sun */
+}
+
+#weekdays span:last-child {
+    color: #64b5f6;
+    /* Sat */
+}
+
+.day {
+    transition:
+        opacity .4s ease,
+        transform .4s ease;
+}
+
+.day.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.day.today::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid #ff6363;
+    pointer-events: none;
+}
+
+@keyframes dayPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.18);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.day.pulse {
+    animation: dayPulse 0.6s ease-out;
+}
+
+.journey-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
+}
+
+#journey-start,
+#journey-goal {
+    font-weight: 500;
+}
